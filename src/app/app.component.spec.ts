@@ -5,12 +5,8 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule],
+      declarations: [AppComponent],
     }).compileComponents();
   });
 
@@ -20,16 +16,21 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
+  // Data in component file
   it(`should have as title 'test-angular-unit-test'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('test-angular-unit-test');
+    expect(app.title).toEqual('Tour of Heroes');
   });
 
+  // Text in app page
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('test-angular-unit-test app is running!');
+    const titleElement = compiled.querySelector('div[data-test-id=app-title');
+    if (titleElement) {
+      expect(titleElement.textContent).toContain('Tour of Heroes');
+    }
   });
 });

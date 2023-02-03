@@ -1,0 +1,46 @@
+<div>
+  <button routerLink="/hero/create">Create</button>
+</div>
+
+<h2>My Heroes</h2>
+<ul class="heroes">
+  <li *ngFor="let hero of heroes">
+    <button type="button" (click)="handleSelect(hero)">
+      <span class="badge">{{ hero.id }}</span>
+      <span class="name">{{ hero.name }}</span>
+    </button>
+    <div
+      type="button"
+      class="delete"
+      title="delete hero"
+      (click)="handleDelete(hero)"
+    >
+      x
+    </div>
+  </li>
+</ul>
+
+<div id="search-component">
+  <label for="search-box">Hero Search</label>
+  <input #searchBox id="search-box" (input)="handleSearch(searchBox.value)" />
+
+  <ul class="search-result">
+    <li *ngFor="let hero of heroes$ | async">
+      <a routerLink="/detail/{{ hero.id }}">
+        {{ hero.name }}
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <label for="new-hero">Hero name: </label>
+  <input id="new-hero" #heroName />
+  <button
+    type="button"
+    class="add-button"
+    (click)="handleAdd(heroName.value); heroName.value = ''"
+  >
+    Add hero
+  </button>
+</div>
