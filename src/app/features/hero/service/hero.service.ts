@@ -52,7 +52,7 @@ export class HeroService {
   getHero(id: number): Observable<Hero | null> {
     const url = `${Path.heroes}/${id}`;
     return this.http.get<Hero>(url).pipe(
-      tap((_) => this.log(`fetched hero id=${id}`)),
+      tap(() => this.log(`fetched hero id=${id}`)),
       catchError(this.inMemoryDataService.handleError<Hero>(`getHero id=${id}`))
     );
   }
@@ -66,7 +66,7 @@ export class HeroService {
 
   updateHero(hero: Hero): Observable<void> {
     return this.http.put(Path.heroes, hero, this.httpOptions).pipe(
-      tap((_) => this.log(`updated hero id=${hero.id}`)),
+      tap(() => this.log(`updated hero id=${hero.id}`)),
       catchError(this.inMemoryDataService.handleError<any>('updateHero'))
     );
   }
@@ -74,7 +74,7 @@ export class HeroService {
   deleteHero(id: number): Observable<Hero> {
     const url = `${Path.heroes}/${id}`;
     return this.http.delete<Hero>(url, this.httpOptions).pipe(
-      tap((_) => this.log(`deleted hero id=${id}`)),
+      tap(() => this.log(`deleted hero id=${id}`)),
       catchError(this.inMemoryDataService.handleError<Hero>('deleteHero'))
     );
   }
