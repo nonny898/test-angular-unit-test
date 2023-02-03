@@ -7,6 +7,8 @@ import { Hero } from 'src/app/core/model/hero';
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent {
-  @Input() powers!: string[];
+  @Input() powers: string[] = [];
   @Input() model!: Hero;
+  @Input() isSubmitted: boolean = false;
+  @Input() handleChangeSubmitStatus!: (status: boolean) => void;
 }

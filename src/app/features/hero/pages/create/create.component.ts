@@ -9,11 +9,24 @@ import { Hero } from 'src/app/core/model/hero';
 export class CreateComponent {
   powers = ['Really Smart', 'Super Flexible', 'Super Hot', 'Weather Changer'];
 
-  model = new Hero(18, 'Dr. IQ', this.powers[0], 'Chuck Overstreet');
+  model = new Hero({
+    id: null,
+    name: '',
+    power: '',
+    alterEgo: '',
+  });
 
   isSubmitted = false;
 
   handleSubmit() {
     this.isSubmitted = true;
+  }
+
+  handleChangeSubmitStatus(status: boolean) {
+    console.log(
+      '🚀 ~ CreateComponent ~ handleChangeSubmitStatus ~ status',
+      status
+    );
+    this.isSubmitted = status;
   }
 }

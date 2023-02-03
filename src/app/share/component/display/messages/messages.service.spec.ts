@@ -13,4 +13,10 @@ describe('MessagesService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should add message', () => {
+    const message = 'Test message.';
+    service.add(message);
+    expect(service.messages.length).toBeLessThan(2);
+  });
 });
