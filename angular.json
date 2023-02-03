@@ -1,8 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": "3cfc2d99-2d4e-45ed-8f28-377e73167b9a",
-    "defaultCollection": "@angular-eslint/schematics"
+    "analytics": "3cfc2d99-2d4e-45ed-8f28-377e73167b9a"
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -88,6 +87,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "codeCoverage": true,
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",

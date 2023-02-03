@@ -22,4 +22,10 @@ describe('CreateComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should submit form', () => {
+    component.handleChangeSubmitStatus(true);
+    fixture.detectChanges();
+    expect(component.isSubmitted).toBeTruthy();
+  });
 });

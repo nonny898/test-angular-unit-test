@@ -19,4 +19,9 @@ describe('MessagesService', () => {
     service.add(message);
     expect(service.messages.length).toBeLessThan(2);
   });
+
+  it('should clear message', () => {
+    service.clear();
+    expect(service.messages.length).toBeLessThan(1);
+  });
 });

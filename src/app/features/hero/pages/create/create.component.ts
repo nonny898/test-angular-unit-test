@@ -18,15 +18,7 @@ export class CreateComponent {
 
   isSubmitted = false;
 
-  handleSubmit() {
-    this.isSubmitted = true;
-  }
-
   handleChangeSubmitStatus(status: boolean) {
-    console.log(
-      '🚀 ~ CreateComponent ~ handleChangeSubmitStatus ~ status',
-      status
-    );
     this.isSubmitted = status;
   }
 }
