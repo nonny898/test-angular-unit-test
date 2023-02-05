@@ -71,11 +71,11 @@ export class HeroService {
     );
   }
 
-  deleteHero(id: number): Observable<Hero> {
+  deleteHero(id: number): Observable<void> {
     const url = `${Path.heroes}/${id}`;
-    return this.http.delete<Hero>(url, this.httpOptions).pipe(
+    return this.http.delete(url, this.httpOptions).pipe(
       tap(() => this.log(`deleted hero id=${id}`)),
-      catchError(this.inMemoryDataService.handleError<Hero>('deleteHero'))
+      catchError(this.inMemoryDataService.handleError<any>('deleteHero'))
     );
   }
 }

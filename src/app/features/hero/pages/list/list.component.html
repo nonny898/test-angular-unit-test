@@ -1,11 +1,17 @@
 <div>
-  <button routerLink="/hero/create">Create</button>
+  <button data-test-id="create-hero-button" routerLink="/hero/create">
+    Create
+  </button>
 </div>
 
 <h2>My Heroes</h2>
 <ul class="heroes">
   <li *ngFor="let hero of heroes">
-    <button type="button" (click)="handleSelect(hero)">
+    <button
+      attr.data-test-id="hero-link-{{ hero.id }}"
+      type="button"
+      (click)="handleSelect(hero)"
+    >
       <span class="badge">{{ hero.id }}</span>
       <span class="name">{{ hero.name }}</span>
     </button>
@@ -26,7 +32,10 @@
 
   <ul class="search-result">
     <li *ngFor="let hero of heroes$ | async">
-      <a routerLink="/detail/{{ hero.id }}">
+      <a
+        :data-test-id="`hero-link-${hero.id}`"
+        routerLink="/detail/{{ hero.id }}"
+      >
         {{ hero.name }}
       </a>
     </li>

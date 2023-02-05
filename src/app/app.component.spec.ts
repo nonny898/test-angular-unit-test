@@ -30,7 +30,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    const titleElement = compiled.querySelector('div[data-test-id=app-title');
+    const titleElement = compiled.querySelector('div[data-test-id=app-title]');
     if (titleElement) {
       expect(titleElement.textContent).toContain('Tour of Heroes');
     }

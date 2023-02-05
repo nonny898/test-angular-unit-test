@@ -46,7 +46,7 @@ export class ListComponent implements OnInit {
   }
 
   handleSelect(hero: Hero) {
-    this.router.navigate([`${hero.id}`], { relativeTo: this.route });
+    this.router.navigate([`/hero/${hero.id}`]);
   }
 
   handleAdd(name: string): void {
@@ -60,7 +60,9 @@ export class ListComponent implements OnInit {
   }
 
   handleDelete(hero: Hero) {
-    this.heroes = this.heroes.filter((h) => h !== hero);
+    this.heroes = this.heroes.filter((h) => {
+      return h.id !== hero.id;
+    });
     this.heroService.deleteHero(hero.id).subscribe();
   }
 }
