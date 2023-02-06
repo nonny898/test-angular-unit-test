@@ -51,7 +51,7 @@ describe('HeroService', () => {
   it('should be get heroes', (done) => {
     service.getHeroes().subscribe((res) => {
       expect(res).toEqual(HEROES);
-      expect(res.length).toBeGreaterThanOrEqual(9);
+      expect(res.length).toEqual(9);
       done();
     });
 
@@ -106,7 +106,7 @@ describe('HeroService', () => {
   });
 
   it('should be create hero return added log', (done) => {
-    const hero = { name: 'New Hero' };
+    const hero = { name: 'Create New Hero' };
 
     const stubValue: string = `HeroService: added hero w/ id=${21}`;
 

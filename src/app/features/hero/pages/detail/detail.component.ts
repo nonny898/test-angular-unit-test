@@ -29,10 +29,12 @@ export class DetailComponent implements OnInit {
     });
   }
 
-  handleSave(): void {
+  handleSave(): string {
     if (this.hero) {
       this.heroService.updateHero(this.hero).subscribe(() => this.handleBack());
+      return 'Updated';
     }
+    return 'No hero existed';
   }
 
   handleBack(): void {

@@ -11,10 +11,21 @@ import { Router } from '@angular/router';
 import { routes } from '../../hero-routing.module';
 import { ListComponent } from './list.component';
 import { By } from '@angular/platform-browser';
-import { HEROES } from 'src/app/core/mock/mock-heroes';
 import { HeroService } from '../../service/hero.service';
 import { of } from 'rxjs';
 import { Hero } from 'src/app/core/interface/hero.list';
+
+const MOCK_HEROES = [
+  { id: 12, name: 'Dr. Nice' },
+  { id: 13, name: 'Bombasto' },
+  { id: 14, name: 'Celeritas' },
+  { id: 15, name: 'Magneta' },
+  { id: 16, name: 'RubberMan' },
+  { id: 17, name: 'Dynama' },
+  { id: 18, name: 'Dr. IQ' },
+  { id: 19, name: 'Magma' },
+  { id: 20, name: 'Tornado' },
+];
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -24,9 +35,12 @@ describe('ListComponent', () => {
   beforeEach(async () => {
     heroService = jasmine.createSpyObj('HeroService', [
       'getHeroes',
+      'searchHeroes',
       'createHero',
       'deleteHero',
     ]);
+
+    heroService.getHeroes.and.returnValue(of(MOCK_HEROES));
 
     await TestBed.configureTestingModule({
       imports: [
@@ -41,8 +55,6 @@ describe('ListComponent', () => {
       ],
       declarations: [ListComponent],
     }).compileComponents();
-
-    heroService.getHeroes.and.returnValue(of(HEROES));
 
     fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;
@@ -62,6 +74,32 @@ describe('ListComponent', () => {
       expect(createElement.textContent).toContain('Create');
     }
   });
+
+  it('should handle initial search', () => {
+    const searchLinks: Array<HTMLAnchorElement> = fixture.debugElement
+      .queryAll(By.css('a.hero-search-link'))
+      .map((a) => a.nativeElement);
+    expect(searchLinks.length).toEqual(0);
+  });
+
+  it('should handle inputed search', fakeAsync(() => {
+    heroService.searchHeroes.and.returnValue(
+      of([
+        { id: 15, name: 'Magneta' },
+        { id: 19, name: 'Magma' },
+      ])
+    );
+    component.handleSearch('mag');
+
+    tick(500);
+
+    fixture.detectChanges();
+
+    const searchLinks: Array<HTMLAnchorElement> = fixture.debugElement
+      .queryAll(By.css('a.hero-search-link'))
+      .map((a) => a.nativeElement);
+    expect(searchLinks.length).toEqual(2);
+  }));
 
   describe('Testing List Heros', () => {
     for (let i = 12; i < 21; i++) {
@@ -97,11 +135,11 @@ describe('ListComponent', () => {
   it('should create hero', () => {
     const newHero: Hero = {
       id: 21,
-      name: 'New Hero',
+      name: 'List: Create New Hero',
     };
 
     heroService.createHero.and.returnValue(of(newHero));
-    component.handleAdd('New Hero');
+    component.handleAdd(newHero.name);
 
     expect(component.heroes.length).toEqual(10);
     expect(component.heroes[9]).toEqual(newHero);
@@ -110,7 +148,7 @@ describe('ListComponent', () => {
   it('should delete hero', () => {
     const newHero: Hero = {
       id: 21,
-      name: 'New Hero',
+      name: 'List: Delete New Hero',
     };
     heroService.deleteHero.and.returnValue(of());
     component.handleDelete(newHero);

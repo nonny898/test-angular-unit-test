@@ -33,6 +33,7 @@
   <ul class="search-result">
     <li *ngFor="let hero of heroes$ | async">
       <a
+        class="hero-search-link"
         :data-test-id="`hero-link-${hero.id}`"
         routerLink="/detail/{{ hero.id }}"
       >

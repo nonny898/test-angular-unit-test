@@ -14,7 +14,7 @@ export class ListComponent implements OnInit {
   heroes: Hero[] = [];
 
   heroes$!: Observable<Hero[]>;
-  private searchTerms = new Subject<string>();
+  searchTerms = new Subject<string>();
 
   constructor(
     private heroService: HeroService,
