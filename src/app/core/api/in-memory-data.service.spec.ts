@@ -44,10 +44,18 @@ describe('InMemoryDataService', () => {
   it('should handle error when create', (done) => {
     service
       .handleError<Hero>('addHero', { id: 20, name: 'Tornado' })(
-        'Cannot Create Hero'
+        'Cannot create hero'
       )
       .subscribe((res) => {
         expect(res.id).toEqual(20);
+        done();
+      });
+  });
+  it('should handle error when create', (done) => {
+    service
+      .handleError<undefined>()('Empty handle error')
+      .subscribe((res) => {
+        expect(res).toEqual(undefined);
         done();
       });
   });

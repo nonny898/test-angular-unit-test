@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Hero } from 'src/app/core/interface/hero.list';
 import { HeroService } from '../../service/hero.service';
@@ -10,7 +10,7 @@ import { HeroService } from '../../service/hero.service';
   styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent implements OnInit {
-  @Input() hero?: Hero | null;
+  hero: Hero | null = null;
 
   constructor(
     private route: ActivatedRoute,

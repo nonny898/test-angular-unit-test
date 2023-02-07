@@ -75,6 +75,16 @@ describe('HeroService', () => {
     req.flush(response);
   });
 
+  it('should be search non-exist heroes empty', (done) => {
+    service.searchHeroes('test').subscribe((res) => {
+      expect(res.length).toEqual(0);
+      done();
+    });
+
+    const req = httpMock.expectOne(`api/heroes/?name=test`);
+    req.flush([]);
+  });
+
   it('should be search heroes empty if empty string', (done) => {
     service.searchHeroes('').subscribe((res) => {
       expect(res).toEqual([]);
@@ -125,5 +135,23 @@ describe('HeroService', () => {
 
     const req = httpMock.expectOne(`api/heroes`);
     req.flush({ id: 21, ...hero });
+  });
+
+  it('should be delete hero return deleted log', (done) => {
+    const stubValue: string = `HeroService: deleted hero id=${21}`;
+
+    messageService.add.and.returnValue(stubValue);
+
+    service.deleteHero(21).subscribe((res) => {
+      // Check spy object call count
+      expect(messageService.add.calls.count()).toBe(1);
+
+      // Check spy most recent return value
+      expect(messageService.add.calls.mostRecent().returnValue).toBe(stubValue);
+      done();
+    });
+
+    const req = httpMock.expectOne(`api/heroes/21`);
+    req.flush(null);
   });
 });

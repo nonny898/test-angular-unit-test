@@ -55,7 +55,9 @@ describe('ListComponent', () => {
       ],
       declarations: [ListComponent],
     }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -143,6 +145,11 @@ describe('ListComponent', () => {
 
     expect(component.heroes.length).toEqual(10);
     expect(component.heroes[9]).toEqual(newHero);
+  });
+
+  it('should not create hero with empty name', () => {
+    component.handleAdd('');
+    expect(component.heroes.length).toBeLessThanOrEqual(10);
   });
 
   it('should delete hero', () => {

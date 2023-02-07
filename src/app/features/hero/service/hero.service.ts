@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Hero } from 'src/app/core/interface/hero.list';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { MessagesService } from 'src/app/share/component/display/messages/messages.service';
 import Path from 'src/app/core/api/path';
 import { InMemoryDataService } from 'src/app/core/api/in-memory-data.service';

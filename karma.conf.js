@@ -37,7 +37,7 @@ module.exports = function (config) {
         },
       },
     },
-    files: ["src/**/*.js", "test/**/*.js"],
+    files: [],
     reporters: ["progress", "kjhtml", "coverage"],
     port: 9876,
     colors: true,
