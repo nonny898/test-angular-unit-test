@@ -13,19 +13,12 @@ import { ListComponent } from './list.component';
 import { By } from '@angular/platform-browser';
 import { HeroService } from '../../service/hero.service';
 import { of } from 'rxjs';
-import { Hero } from 'src/app/core/interface/hero.list';
-
-const MOCK_HEROES = [
-  { id: 12, name: 'Dr. Nice' },
-  { id: 13, name: 'Bombasto' },
-  { id: 14, name: 'Celeritas' },
-  { id: 15, name: 'Magneta' },
-  { id: 16, name: 'RubberMan' },
-  { id: 17, name: 'Dynama' },
-  { id: 18, name: 'Dr. IQ' },
-  { id: 19, name: 'Magma' },
-  { id: 20, name: 'Tornado' },
-];
+import { MOCK_HEROES } from 'src/app/core/mock/mock-heroes';
+import { Hero } from 'src/app/core/model/hero';
+import { DisplayModule } from 'src/app/share/component/display/display.module';
+import { MaterialModule } from 'src/app/material/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -46,6 +39,10 @@ describe('ListComponent', () => {
       imports: [
         RouterTestingModule.withRoutes(routes),
         HttpClientTestingModule,
+        DisplayModule,
+        MaterialModule,
+        BrowserAnimationsModule,
+        FormsModule,
       ],
       providers: [
         {
@@ -81,17 +78,21 @@ describe('ListComponent', () => {
     const searchLinks: Array<HTMLAnchorElement> = fixture.debugElement
       .queryAll(By.css('a.hero-search-link'))
       .map((a) => a.nativeElement);
-    expect(searchLinks.length).toEqual(0);
+    expect(searchLinks.length).toEqual(10);
   });
 
   it('should handle inputed search', fakeAsync(() => {
     heroService.searchHeroes.and.returnValue(
       of([
-        { id: 15, name: 'Magneta' },
-        { id: 19, name: 'Magma' },
+        {
+          id: 13,
+          name: 'Zamit',
+          power: 'NITROSTAT',
+          alterEgo: 'PPO',
+        },
       ])
     );
-    component.handleSearch('mag');
+    component.handleSearch('Zamit');
 
     tick(500);
 
@@ -100,7 +101,7 @@ describe('ListComponent', () => {
     const searchLinks: Array<HTMLAnchorElement> = fixture.debugElement
       .queryAll(By.css('a.hero-search-link'))
       .map((a) => a.nativeElement);
-    expect(searchLinks.length).toEqual(2);
+    expect(searchLinks.length).toEqual(1);
   }));
 
   describe('Testing List Heros', () => {
@@ -134,28 +135,12 @@ describe('ListComponent', () => {
     })
   ));
 
-  it('should create hero', () => {
-    const newHero: Hero = {
-      id: 21,
-      name: 'List: Create New Hero',
-    };
-
-    heroService.createHero.and.returnValue(of(newHero));
-    component.handleAdd(newHero.name);
-
-    expect(component.heroes.length).toEqual(10);
-    expect(component.heroes[9]).toEqual(newHero);
-  });
-
-  it('should not create hero with empty name', () => {
-    component.handleAdd('');
-    expect(component.heroes.length).toBeLessThanOrEqual(10);
-  });
-
   it('should delete hero', () => {
     const newHero: Hero = {
-      id: 21,
-      name: 'List: Delete New Hero',
+      id: 13,
+      name: 'Zamit',
+      power: 'NITROSTAT',
+      alterEgo: 'PPO',
     };
     heroService.deleteHero.and.returnValue(of());
     component.handleDelete(newHero);

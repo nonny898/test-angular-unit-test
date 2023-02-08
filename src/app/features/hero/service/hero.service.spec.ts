@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { HeroService } from './hero.service';
-import { HEROES } from 'src/app/core/mock/mock-heroes';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { MessagesService } from 'src/app/share/component/display/messages/messages.service';
-import { Hero } from 'src/app/core/interface/hero.list';
+import { HeroFormInterface } from 'src/app/core/interface/hero.form';
+import { MOCK_HEROES } from 'src/app/core/mock/mock-heroes';
+import { Hero } from 'src/app/core/model/hero';
 
 describe('HeroService', () => {
   let service: HeroService;
@@ -50,19 +51,29 @@ describe('HeroService', () => {
 
   it('should be get heroes', (done) => {
     service.getHeroes().subscribe((res) => {
-      expect(res).toEqual(HEROES);
-      expect(res.length).toEqual(9);
+      expect(res).toEqual(MOCK_HEROES);
+      expect(res.length).toEqual(10);
       done();
     });
 
     const req = httpMock.expectOne(`api/heroes`);
-    req.flush(HEROES);
+    req.flush(MOCK_HEROES);
   });
 
   it('should be search heroes', (done) => {
-    const response = [
-      { id: 15, name: 'Magneta' },
-      { id: 19, name: 'Magma' },
+    const response: Hero[] = [
+      {
+        id: 11,
+        name: 'Overhold',
+        power: 'Acetaminophen and Diphenhydramine HCl',
+        alterEgo: 'Visual Basic',
+      },
+      {
+        id: 12,
+        name: 'Matsoft',
+        power: 'Xyzal',
+        alterEgo: 'ICD-9',
+      },
     ];
 
     service.searchHeroes('mag').subscribe((res) => {
@@ -87,14 +98,22 @@ describe('HeroService', () => {
 
   it('should be search heroes empty if empty string', (done) => {
     service.searchHeroes('').subscribe((res) => {
-      expect(res).toEqual([]);
-      expect(res.length).toEqual(0);
+      expect(res).toEqual(MOCK_HEROES);
+      expect(res.length).toEqual(MOCK_HEROES.length);
       done();
     });
+
+    const req = httpMock.expectOne(`api/heroes`);
+    req.flush(MOCK_HEROES);
   });
 
   it('should be get hero return fetch log', (done) => {
-    const hero: Hero = { id: 12, name: 'Dr. Nice' };
+    const hero: Hero = new Hero({
+      id: 12,
+      name: 'Matsoft',
+      power: 'Xyzal',
+      alterEgo: 'ICD-9',
+    });
 
     const stubValue: string = `HeroService: fetched hero id=${12}`;
 
@@ -116,13 +135,13 @@ describe('HeroService', () => {
   });
 
   it('should be create hero return added log', (done) => {
-    const hero = { name: 'Create New Hero' };
+    const hero = { name: 'Create New Hero', power: '', alterEgo: '' };
 
     const stubValue: string = `HeroService: added hero w/ id=${21}`;
 
     messageService.add.and.returnValue(stubValue);
 
-    service.createHero(hero as Hero).subscribe((res) => {
+    service.createHero(hero as HeroFormInterface).subscribe((res) => {
       expect(res).toEqual({ id: 21, ...hero });
 
       // Check spy object call count
@@ -142,7 +161,7 @@ describe('HeroService', () => {
 
     messageService.add.and.returnValue(stubValue);
 
-    service.deleteHero(21).subscribe((res) => {
+    service.deleteHero(21).subscribe(() => {
       // Check spy object call count
       expect(messageService.add.calls.count()).toBe(1);
 

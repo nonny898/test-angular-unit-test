@@ -16,12 +16,12 @@ describe('FormComponent', () => {
 
     fixture = TestBed.createComponent(FormComponent);
     component = fixture.componentInstance;
-    component.model = new Hero({
+    component.model = {
       id: null,
       name: '',
       power: '',
       alterEgo: '',
-    });
+    };
     fixture.detectChanges();
   });
 

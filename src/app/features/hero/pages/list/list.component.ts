@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Hero } from 'src/app/core/interface/hero.list';
+import { Router } from '@angular/router';
 import { HeroService } from '../../service/hero.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ObservableInput, ReplaySubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Hero } from 'src/app/core/model/hero';
+import { TableColumnInterface } from 'src/app/share/component/display/table/table.type';
+import { DataSource } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-list',
@@ -12,29 +14,55 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 })
 export class ListComponent implements OnInit {
   heroes: Hero[] = [];
-
   heroes$!: Observable<Hero[]>;
+
+  searchValue: string = 'Searc';
+
   searchTerms = new Subject<string>();
 
-  constructor(
-    private heroService: HeroService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private heroService: HeroService, private router: Router) {}
+
+  get columns(): TableColumnInterface[] {
+    return [
+      {
+        headerName: 'ID',
+        dataIndex: 'id',
+      },
+      {
+        headerName: 'Name',
+        dataIndex: 'name',
+      },
+      {
+        headerName: 'Power',
+        dataIndex: 'power',
+      },
+      {
+        headerName: 'Alter Ego',
+        dataIndex: 'alterEgo',
+      },
+    ];
+  }
+
+  get dataIndex() {
+    return this.columns.map((col) => col.dataIndex);
+  }
 
   ngOnInit(): void {
     this.handleGetHeroes();
+    this.handleInitSearch();
+  }
 
-    this.heroes$ = this.searchTerms.pipe(
-      // wait 300ms after each keystroke before considering the term
+  handleInitSearch() {
+    const response$ = this.searchTerms.pipe(
       debounceTime(300),
-
-      // ignore new term if same as previous term
       distinctUntilChanged(),
-
-      // switch to new search observable each time the term changes
-      switchMap((term: string) => this.heroService.searchHeroes(term))
+      switchMap((term: string) => {
+        return this.handleSetSearchValue(term);
+      })
     );
+    response$.subscribe((res) => {
+      this.heroes = res;
+    });
   }
 
   handleGetHeroes(): void {
@@ -45,18 +73,13 @@ export class ListComponent implements OnInit {
     this.searchTerms.next(term);
   }
 
-  handleSelect(hero: Hero) {
-    this.router.navigate([`/hero/${hero.id}`]);
+  handleSetSearchValue(term: string): ObservableInput<Hero[]> {
+    this.searchValue = term;
+    return this.heroService.searchHeroes(term);
   }
 
-  handleAdd(name: string): void {
-    name = name.trim();
-    if (!name) {
-      return;
-    }
-    this.heroService.createHero({ name } as Hero).subscribe((hero) => {
-      this.heroes.push(hero);
-    });
+  handleSelect(hero: Hero) {
+    this.router.navigate([`/hero/${hero.id}`]);
   }
 
   handleDelete(hero: Hero) {

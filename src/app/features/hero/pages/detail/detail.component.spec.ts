@@ -4,15 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { Hero } from 'src/app/core/interface/hero.list';
+import { Hero } from 'src/app/core/model/hero';
 import { HeroService } from '../../service/hero.service';
 
 import { DetailComponent } from './detail.component';
 
-const DETAIL_HERO: Hero = {
+const DETAIL_HERO: Hero = new Hero({
   id: 12,
-  name: 'Dr. Nice',
-};
+  name: 'Matsoft',
+  power: 'Xyzal',
+  alterEgo: 'ICD-9',
+});
 
 describe('DetailComponent', () => {
   let component: DetailComponent;
@@ -76,6 +78,8 @@ describe('DetailComponent', () => {
     component.hero = {
       id: 11,
       name: 'Detail: Exist Hero',
+      power: '',
+      alterEgo: '',
     };
 
     const response = component.handleSave();

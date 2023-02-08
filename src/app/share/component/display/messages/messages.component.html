@@ -1,7 +1,11 @@
-<div *ngIf="messageService.messages.length">
-  <h2>Messages</h2>
-  <button type="button" class="clear" (click)="messageService.clear()">
-    Clear messages
-  </button>
-  <div *ngFor="let message of messageService.messages">{{ message }}</div>
+<div class="message__container">
+  <div class="message-info__container">
+    <span class="message__title">Recent Message:</span>
+    <span>{{ recentMessage }}</span>
+  </div>
+  <div class="message-button__container" *ngIf="messageService.messages.length">
+    <button (click)="messageService.clear()" color="warn" mat-flat-button>
+      Clear messages
+    </button>
+  </div>
 </div>

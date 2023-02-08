@@ -1,8 +1,32 @@
-<div>
-  <button data-test-id="create-hero-button" routerLink="/hero/create">
-    Create
-  </button>
-</div>
+<app-card [isPageCard]="true" [cardTitle]="'Heroes'">
+  <div header-extra class="header-button__container">
+    <button
+      data-test-id="create-hero-button"
+      routerLink="/hero/create"
+      color="primary"
+      mat-raised-button
+    >
+      Create Hero
+    </button>
+  </div>
+  <div content>
+    <div class="search__container">
+      <mat-form-field class="search-input__field">
+        <input
+          #heroSearch
+          matInput
+          [(ngModel)]="searchValue"
+          (input)="handleSearch(heroSearch.value)"
+        />
+      </mat-form-field>
+    </div>
+    <app-table
+      [dataSource]="heroes"
+      [columns]="columns"
+      [displayedColumns]="dataIndex"
+    ></app-table>
+  </div>
+</app-card>
 
 <h2>My Heroes</h2>
 <ul class="heroes">
@@ -28,10 +52,15 @@
 
 <div id="search-component">
   <label for="search-box">Hero Search</label>
-  <input #searchBox id="search-box" (input)="handleSearch(searchBox.value)" />
+  <input
+    matInput
+    #searchBox
+    id="search-box"
+    (input)="handleSearch(searchBox.value)"
+  />
 
   <ul class="search-result">
-    <li *ngFor="let hero of heroes$ | async">
+    <li *ngFor="let hero of heroes">
       <a
         class="hero-search-link"
         :data-test-id="`hero-link-${hero.id}`"
@@ -41,16 +70,4 @@
       </a>
     </li>
   </ul>
-</div>
-
-<div>
-  <label for="new-hero">Hero name: </label>
-  <input id="new-hero" #heroName />
-  <button
-    type="button"
-    class="add-button"
-    (click)="handleAdd(heroName.value); heroName.value = ''"
-  >
-    Add hero
-  </button>
 </div>

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Hero } from 'src/app/core/model/hero';
+import { HeroFormInterface } from 'src/app/core/interface/hero.form';
 
 @Component({
   selector: 'app-hero-form',
@@ -8,7 +8,7 @@ import { Hero } from 'src/app/core/model/hero';
 })
 export class FormComponent {
   @Input() powers: string[] = [];
-  @Input() model!: Hero;
+  @Input() model!: HeroFormInterface;
   @Input() isSubmitted: boolean = false;
   @Input() handleChangeSubmitStatus!: (status: boolean) => void;
 }

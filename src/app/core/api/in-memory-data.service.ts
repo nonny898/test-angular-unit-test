@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { InMemoryDbService, RequestInfo } from 'angular-in-memory-web-api';
+import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Observable, of } from 'rxjs';
 import { MessagesService } from 'src/app/share/component/display/messages/messages.service';
-import { Hero } from '../interface/hero.list';
+import { MOCK_HEROES } from '../mock/mock-heroes';
+import { Hero } from '../model/hero';
 
 @Injectable({
   providedIn: 'root',
@@ -10,20 +11,8 @@ import { Hero } from '../interface/hero.list';
 export class InMemoryDataService implements InMemoryDbService {
   constructor(private messageService: MessagesService) {}
 
-  createDb(
-    reqInfo?: RequestInfo | undefined
-  ): {} | Observable<{}> | Promise<{}> {
-    const heroes = [
-      { id: 12, name: 'Dr. Nice' },
-      { id: 13, name: 'Bombasto' },
-      { id: 14, name: 'Celeritas' },
-      { id: 15, name: 'Magneta' },
-      { id: 16, name: 'RubberMan' },
-      { id: 17, name: 'Dynama' },
-      { id: 18, name: 'Dr. IQ' },
-      { id: 19, name: 'Magma' },
-      { id: 20, name: 'Tornado' },
-    ];
+  createDb(): {} | Observable<{}> | Promise<{}> {
+    const heroes = MOCK_HEROES;
     return { heroes };
   }
 
@@ -35,7 +24,7 @@ export class InMemoryDataService implements InMemoryDbService {
 
   handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      // TODO: better job of transforming error for user consumption
+      // Add error to messagesService
       this.messageService.add(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.

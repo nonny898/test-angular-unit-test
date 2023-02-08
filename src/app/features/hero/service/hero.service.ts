@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Hero } from 'src/app/core/interface/hero.list';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { MessagesService } from 'src/app/share/component/display/messages/messages.service';
 import Path from 'src/app/core/api/path';
 import { InMemoryDataService } from 'src/app/core/api/in-memory-data.service';
+import { HeroFormInterface } from 'src/app/core/interface/hero.form';
+import { Hero } from 'src/app/core/model/hero';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,7 @@ export class HeroService {
   searchHeroes(term: string): Observable<Hero[]> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
-      return of([]);
+      return this.getHeroes();
     }
     return this.http.get<Hero[]>(`${Path.heroes}/?name=${term}`).pipe(
       tap((x) =>
@@ -53,18 +54,18 @@ export class HeroService {
     const url = `${Path.heroes}/${id}`;
     return this.http.get<Hero>(url).pipe(
       tap(() => this.log(`fetched hero id=${id}`)),
-      catchError(this.inMemoryDataService.handleError<Hero>(`getHero id=${id}`))
+      catchError(this.inMemoryDataService.handleError<null>(`getHero id=${id}`))
     );
   }
 
-  createHero(hero: Hero): Observable<Hero> {
+  createHero(hero: HeroFormInterface): Observable<Hero | null> {
     return this.http.post<Hero>(Path.heroes, hero, this.httpOptions).pipe(
       tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
-      catchError(this.inMemoryDataService.handleError<Hero>('addHero'))
+      catchError(this.inMemoryDataService.handleError<null>('addHero'))
     );
   }
 
-  updateHero(hero: Hero): Observable<void> {
+  updateHero(hero: HeroFormInterface): Observable<void> {
     return this.http.put(Path.heroes, hero, this.httpOptions).pipe(
       tap(() => this.log(`updated hero id=${hero.id}`)),
       catchError(this.inMemoryDataService.handleError<any>('updateHero'))

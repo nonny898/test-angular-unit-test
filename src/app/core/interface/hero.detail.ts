@@ -1,5 +1,5 @@
 import { HeroInterface } from './hero.main';
 
-export interface HeroListInterface extends HeroInterface {
+export interface HeroDetailInterface extends HeroInterface {
   id: number;
 }

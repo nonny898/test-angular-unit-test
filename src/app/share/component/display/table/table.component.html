@@ -1,0 +1,11 @@
+<table mat-table [dataSource]="dataSource">
+  <caption class="table__caption">
+    All Heroes
+  </caption>
+  <ng-container *ngFor="let col of columns" [matColumnDef]="col.dataIndex">
+    <th mat-header-cell *matHeaderCellDef>{{ col.headerName }}</th>
+    <td mat-cell *matCellDef="let element">{{ element[col.dataIndex] }}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

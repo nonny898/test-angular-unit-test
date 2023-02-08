@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { Hero } from '../interface/hero.list';
+import { HeroFormInterface } from '../interface/hero.form';
+import { MOCK_HEROES } from '../mock/mock-heroes';
 
 import { InMemoryDataService } from './in-memory-data.service';
 
@@ -16,23 +17,13 @@ describe('InMemoryDataService', () => {
   });
 
   it('should createDB return HEROES', () => {
-    expect(service.createDb()).toEqual({
-      heroes: [
-        { id: 12, name: 'Dr. Nice' },
-        { id: 13, name: 'Bombasto' },
-        { id: 14, name: 'Celeritas' },
-        { id: 15, name: 'Magneta' },
-        { id: 16, name: 'RubberMan' },
-        { id: 17, name: 'Dynama' },
-        { id: 18, name: 'Dr. IQ' },
-        { id: 19, name: 'Magma' },
-        { id: 20, name: 'Tornado' },
-      ],
-    });
+    expect(service.createDb()).toEqual({ heroes: MOCK_HEROES });
   });
 
   it('should getId return max integer', () => {
-    const newId = service.genId([{ id: 20, name: 'Tornado' }]);
+    const newId = service.genId([
+      { id: 20, name: 'Tornado', power: 'Xyzal', alterEgo: 'ICD-9' },
+    ]);
     expect(newId).toEqual(21);
   });
 
@@ -43,11 +34,14 @@ describe('InMemoryDataService', () => {
 
   it('should handle error when create', (done) => {
     service
-      .handleError<Hero>('addHero', { id: 20, name: 'Tornado' })(
-        'Cannot create hero'
-      )
+      .handleError<HeroFormInterface>('addHero', {
+        id: null,
+        name: 'Tornado',
+        power: 'Xyzal',
+        alterEgo: 'ICD-9',
+      })('Cannot create hero')
       .subscribe((res) => {
-        expect(res.id).toEqual(20);
+        expect(res.id).toEqual(null);
         done();
       });
   });

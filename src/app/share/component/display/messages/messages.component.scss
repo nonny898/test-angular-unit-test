@@ -1,0 +1,15 @@
+.message__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  min-height: 36px;
+  .message-info__container {
+    font-size: 1.25rem;
+    font-weight: 500;
+    .message__title {
+      font-weight: 300;
+      margin-right: 0.5rem;
+    }
+  }
+}

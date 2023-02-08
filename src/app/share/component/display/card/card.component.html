@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-header [ngClass]="{ 'page-card__header': isPageCard }">
+    <div *ngIf="isPageCard; else elseBlock" class="page-header__title">
+      <div class="header-title__container">
+        {{ cardTitle }}
+      </div>
+      <div class="header-extra__container">
+        <ng-content select="[header-extra]"></ng-content>
+      </div>
+    </div>
+    <ng-template #elseBlock>{{ cardTitle }}</ng-template>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-content select="[content]"></ng-content>
+  </mat-card-content>
+</mat-card>

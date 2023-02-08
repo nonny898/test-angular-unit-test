@@ -2,16 +2,17 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { HeroFormInterface } from 'src/app/core/interface/hero.form';
 import { Hero } from 'src/app/core/model/hero';
 import { FormComponent } from '../../components/form/form.component';
 import { CreateComponent } from './create.component';
 
-const INIT_HERO_MODEL = new Hero({
+const INIT_HERO_MODEL: HeroFormInterface = {
   id: null,
   name: '',
   power: '',
   alterEgo: '',
-});
+};
 
 describe('CreateComponent', () => {
   let component: CreateComponent;

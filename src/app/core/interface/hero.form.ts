@@ -1,6 +1,5 @@
-export interface HeroFormInterface {
+import { HeroInterface } from './hero.main';
+
+export interface HeroFormInterface extends HeroInterface {
   id: number | null;
-  name: string;
-  power: string;
-  alterEgo?: string;
 }

@@ -11,6 +11,9 @@ import { InMemoryDataService } from './core/api/in-memory-data.service';
 
 import { FeaturesModule } from './features/features.module';
 import { ShareModule } from './share/share.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +28,8 @@ import { ShareModule } from './share/share.module';
     }),
     FeaturesModule,
     ShareModule,
+    BrowserAnimationsModule,
+    MaterialModule,
   ],
 })
 export class AppModule {}

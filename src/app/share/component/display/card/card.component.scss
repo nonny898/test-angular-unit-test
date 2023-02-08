@@ -1,0 +1,23 @@
+.mat-mdc-card {
+  border-radius: 10px;
+  box-shadow: 0px 10px 6px rgb(0 0 0 / 5%);
+  .page-card__header {
+    padding: 1rem;
+    border-bottom: 2px solid rgb(228, 228, 228);
+    .page-header__title {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      .header-title__container {
+        font-size: 2rem;
+        line-height: 2rem;
+      }
+      .header-extra__container {
+        flex-grow: 1;
+      }
+    }
+  }
+  .mat-mdc-card-content {
+    padding: 1rem;
+  }
+}

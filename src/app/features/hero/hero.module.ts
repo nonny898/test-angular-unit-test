@@ -8,6 +8,8 @@ import { DetailComponent } from './pages/detail/detail.component';
 import { CreateComponent } from './pages/create/create.component';
 import { EditComponent } from './pages/edit/edit.component';
 import { FormComponent } from './components/form/form.component';
+import { MaterialModule } from 'src/app/material/material.module';
+import { DisplayModule } from 'src/app/share/component/display/display.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,12 @@ import { FormComponent } from './components/form/form.component';
     EditComponent,
     FormComponent,
   ],
-  imports: [CommonModule, HeroRoutingModule, FormsModule],
+  imports: [
+    CommonModule,
+    HeroRoutingModule,
+    MaterialModule,
+    FormsModule,
+    DisplayModule,
+  ],
 })
 export class HeroModule {}

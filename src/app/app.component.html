@@ -7,13 +7,25 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<div id="app-title" data-test-id="app-title">{{ title }}</div>
-
-<nav>
-  <button routerLink="/dashboard">Dashboard</button>
-  <button routerLink="/hero">Heroes</button>
-  <button routerLink="/hero/create">Heroes Create</button>
-</nav>
+<mat-sidenav-container class="side-nav__container">
+  <mat-sidenav mode="side" opened>
+    <div class="side-nav__buttons">
+      <div class="side-nav__button" *ngFor="let navigation of navigations">
+        <button [routerLink]="[navigation.path]" mat-raised-button>
+          {{ navigation.name }}
+        </button>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="main-content__container">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="main-footer__container">
+      <app-messages></app-messages>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
@@ -22,7 +34,3 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-<router-outlet></router-outlet>
-
-<app-messages></app-messages>

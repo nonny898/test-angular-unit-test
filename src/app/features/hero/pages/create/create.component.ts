@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Hero } from 'src/app/core/model/hero';
+import { HeroFormInterface } from 'src/app/core/interface/hero.form';
 
 @Component({
   selector: 'app-create',
@@ -9,12 +9,12 @@ import { Hero } from 'src/app/core/model/hero';
 export class CreateComponent {
   powers = ['Really Smart', 'Super Flexible', 'Super Hot', 'Weather Changer'];
 
-  model = new Hero({
+  model: HeroFormInterface = {
     id: null,
     name: '',
     power: '',
     alterEgo: '',
-  });
+  };
 
   isSubmitted = false;
 
