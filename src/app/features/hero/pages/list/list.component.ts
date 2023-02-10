@@ -5,7 +5,6 @@ import { Observable, ObservableInput, ReplaySubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Hero } from 'src/app/core/model/hero';
 import { TableColumnInterface } from 'src/app/share/component/display/table/table.type';
-import { DataSource } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-list',
@@ -16,7 +15,7 @@ export class ListComponent implements OnInit {
   heroes: Hero[] = [];
   heroes$!: Observable<Hero[]>;
 
-  searchValue: string = 'Searc';
+  searchValue: string = '';
 
   searchTerms = new Subject<string>();
 

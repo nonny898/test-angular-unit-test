@@ -11,4 +11,8 @@ export class TableComponent {
   @Input() dataSource!: any[] | Observable<any[]>;
   @Input() columns!: TableColumnInterface[];
   @Input() displayedColumns!: string[];
+
+  handleRowClick(row: any) {
+    console.log('row :>> ', row);
+  }
 }

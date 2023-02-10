@@ -11,10 +11,15 @@
   </div>
   <div content>
     <div class="search__container">
-      <mat-form-field class="search-input__field">
+      <mat-form-field
+        appearance="outline"
+        class="search-input__field"
+        subscriptSizing="dynamic"
+      >
         <input
           #heroSearch
           matInput
+          placeholder="Search Hero..."
           [(ngModel)]="searchValue"
           (input)="handleSearch(heroSearch.value)"
         />
@@ -27,47 +32,3 @@
     ></app-table>
   </div>
 </app-card>
-
-<h2>My Heroes</h2>
-<ul class="heroes">
-  <li *ngFor="let hero of heroes">
-    <button
-      attr.data-test-id="hero-link-{{ hero.id }}"
-      type="button"
-      (click)="handleSelect(hero)"
-    >
-      <span class="badge">{{ hero.id }}</span>
-      <span class="name">{{ hero.name }}</span>
-    </button>
-    <div
-      type="button"
-      class="delete"
-      title="delete hero"
-      (click)="handleDelete(hero)"
-    >
-      x
-    </div>
-  </li>
-</ul>
-
-<div id="search-component">
-  <label for="search-box">Hero Search</label>
-  <input
-    matInput
-    #searchBox
-    id="search-box"
-    (input)="handleSearch(searchBox.value)"
-  />
-
-  <ul class="search-result">
-    <li *ngFor="let hero of heroes">
-      <a
-        class="hero-search-link"
-        :data-test-id="`hero-link-${hero.id}`"
-        routerLink="/detail/{{ hero.id }}"
-      >
-        {{ hero.name }}
-      </a>
-    </li>
-  </ul>
-</div>
